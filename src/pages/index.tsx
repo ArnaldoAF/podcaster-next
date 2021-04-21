@@ -6,7 +6,7 @@ export default function Home(props) {
   return (
     <div>
       <h1>INDEXX</h1> 
-
+      
     </div>
     
   )
