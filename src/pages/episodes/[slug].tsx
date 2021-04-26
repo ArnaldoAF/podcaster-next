@@ -25,6 +25,12 @@ type Episode = {
   }
 
 export default function Episode({episode} : EpisodeProps) {
+    // const router = useRouter();
+    // if (router.isFallback) {
+    //     return (
+    //         <h1>CARREGANDO...</h1>
+    //     )
+    // }
 
     return (
         <div className={styles.episode}>
@@ -63,8 +69,39 @@ export default function Episode({episode} : EpisodeProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+
+    const {data} = await api.get('episodes', {
+        params: {
+          _limit: 12,
+          _sort: 'published_at',
+          _order: 'desc'
+        }
+      });
+
+    const paths = data.map(episode => {
+        return {
+            params: {
+                slug: episode.id
+            }
+        }
+    })
     return {
-        paths: [],
+        // páginas p/ gerar static no momento da build
+        paths, 
+        //determina o comportamento de uma página ñ gerada estaticamente
+        // argumentos: 
+        // false - retorna 404
+        // true - vai tentar buscar os dados pelo lado do client
+        // vai precisar desse código:
+        //     const router = useRouter();
+        // if (router.isFallback) {
+        //     return (
+        //         <h1>CARREGANDO...</h1>
+        //     )
+        // }
+        // 'blocking' - roda as requisições no servidor no next,
+        // a pessoa só vai ter acesso à pagina quando ela estiver carregada
+        // Melhor opção para SEO
         fallback: 'blocking'
     }
 }
