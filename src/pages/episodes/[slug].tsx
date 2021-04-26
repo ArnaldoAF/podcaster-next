@@ -6,7 +6,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 import Image from 'next/image';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 type Episode = {
     id: string;
